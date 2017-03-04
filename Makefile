@@ -263,7 +263,7 @@ ifeq ($2,macOS)
 		$$(PYTHON_CONFIGURE-$2)
 else
 	cp -f $(PROJECT_DIR)/patch/Python/Setup.embedded $$(PYTHON_DIR-$1)/Modules/Setup.embedded
-	cd $$(PYTHON_DIR-$1) && PATH=$(PROJECT_DIR)/$(PYTHON_DIR-macOS)/python/bin:$(PATH) ./configure \
+	cd $$(PYTHON_DIR-$1) && PATH=$(PROJECT_DIR)/$(PYTHON_DIR-macOS)/dist/bin:$(PATH) ./configure \
 		CC="$$(CC-$1)" LD="$$(CC-$1)" \
 		--host=$$(MACHINE_DETAILED-$1)-apple-$(shell echo $2 | tr '[:upper:]' '[:lower:]') \
 		--build=x86_64-apple-darwin$(shell uname -r) \
@@ -271,6 +271,8 @@ else
 		--without-pymalloc --without-doc-strings --disable-ipv6 --without-ensurepip \
 		ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no \
 		$$(PYTHON_CONFIGURE-$2)
+	sed -ie 's|\#define HAVE_GETENTROPY 1|/* \#undef HAVE_GETENTROPY */|' $$(PYTHON_DIR-$1)/pyconfig.h
+	sed -ie 's|\#define HAVE_CLOCK_GETTIME 1|/* \#undef HAVE_CLOCK_GETTIME */|' $$(PYTHON_DIR-$1)/pyconfig.h
 endif
 
 # Build Python
