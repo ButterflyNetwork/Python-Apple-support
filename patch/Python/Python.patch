@@ -85,17 +85,15 @@ diff -Nru orig/Lib/ctypes/test/test_as_parameter.py modified/Lib/ctypes/test/tes
 diff -Nru orig/Lib/ctypes/test/test_bitfields.py modified/Lib/ctypes/test/test_bitfields.py
 --- orig/Lib/ctypes/test/test_bitfields.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/ctypes/test/test_bitfields.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,11 +1,12 @@
+@@ -1,10 +1,10 @@
  from ctypes import *
  from ctypes.test import need_symbol
 -import unittest
  import os
 +import unittest
  
- import ctypes
  import _ctypes_test
  
-+
  class BITS(Structure):
      _fields_ = [("A", c_int, 1),
                  ("B", c_int, 2),
@@ -221,13 +219,6 @@ diff -Nru orig/Lib/ctypes/test/test_checkretval.py modified/Lib/ctypes/test/test
 diff -Nru orig/Lib/ctypes/test/test_funcptr.py modified/Lib/ctypes/test/test_funcptr.py
 --- orig/Lib/ctypes/test/test_funcptr.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/ctypes/test/test_funcptr.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,4 +1,5 @@
--import os, unittest
-+import os
-+import unittest
- from ctypes import *
- 
- try:
 @@ -8,7 +9,10 @@
      WINFUNCTYPE = CFUNCTYPE
  
@@ -305,7 +296,7 @@ diff -Nru orig/Lib/ctypes/test/test_parameters.py modified/Lib/ctypes/test/test_
 --- orig/Lib/ctypes/test/test_parameters.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/ctypes/test/test_parameters.py	2017-01-27 19:23:25.000000000 +0800
 @@ -1,6 +1,9 @@
--import unittest, sys
+-import unittest
 +import os
 +import unittest
 +
@@ -446,11 +437,10 @@ diff -Nru orig/Lib/ctypes/test/test_refcounts.py modified/Lib/ctypes/test/test_r
 diff -Nru orig/Lib/ctypes/test/test_returnfuncptrs.py modified/Lib/ctypes/test/test_returnfuncptrs.py
 --- orig/Lib/ctypes/test/test_returnfuncptrs.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/ctypes/test/test_returnfuncptrs.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,15 +1,16 @@
+@@ -1,14 +1,16 @@
 +import os
  import unittest
  from ctypes import *
--import os
  
  import _ctypes_test
  
@@ -697,15 +687,14 @@ diff -Nru orig/Lib/distutils/tests/test_config_cmd.py modified/Lib/distutils/tes
 diff -Nru orig/Lib/distutils/tests/test_cygwinccompiler.py modified/Lib/distutils/tests/test_cygwinccompiler.py
 --- orig/Lib/distutils/tests/test_cygwinccompiler.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/distutils/tests/test_cygwinccompiler.py	2017-01-27 19:23:25.000000000 +0800
-@@ -3,16 +3,19 @@
+@@ -3,15 +3,19 @@
  import sys
  import os
  from io import BytesIO
--import subprocess
  from test.support import run_unittest
  
 -from distutils import cygwinccompiler
--from distutils.cygwinccompiler import (CygwinCCompiler, check_config_h,
+-from distutils.cygwinccompiler import (check_config_h,
 -                                       CONFIG_H_OK, CONFIG_H_NOTOK,
 -                                       CONFIG_H_UNCERTAIN, get_versions,
 -                                       get_msvcr)
@@ -765,24 +754,6 @@ diff -Nru orig/Lib/distutils/tests/test_install_lib.py modified/Lib/distutils/te
 diff -Nru orig/Lib/distutils/tests/test_spawn.py modified/Lib/distutils/tests/test_spawn.py
 --- orig/Lib/distutils/tests/test_spawn.py	2017-01-17 15:57:48.000000000 +0800
 +++ modified/Lib/distutils/tests/test_spawn.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,14 +1,14 @@
- """Tests for distutils.spawn."""
- import unittest
- import os
--import time
--from test.support import captured_stdout, run_unittest
-+from test.support import run_unittest
- 
- from distutils.spawn import _nt_quote_args
--from distutils.spawn import spawn, find_executable
-+from distutils.spawn import spawn
- from distutils.errors import DistutilsExecError
- from distutils.tests import support
- 
-+
- class SpawnTestCase(support.TempdirManager,
-                     support.LoggingSilencer,
-                     unittest.TestCase):
 @@ -22,9 +22,7 @@
              res = _nt_quote_args(args)
              self.assertEqual(res, wanted)
@@ -38384,64 +38355,6 @@ diff -Nru orig/Lib/sysconfig.py modified/Lib/sysconfig.py
  
      if env_base:
          return env_base
-diff -Nru orig/Lib/test/__main__.py modified/Lib/test/__main__.py
---- orig/Lib/test/__main__.py	2017-01-17 15:57:49.000000000 +0800
-+++ modified/Lib/test/__main__.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,3 +1,5 @@
-+import sys
- from test import regrtest
- 
--regrtest.main_in_temp_cwd()
-+result = regrtest.main_in_temp_cwd()
-+sys.exit(result)
-diff -Nru orig/Lib/test/regrtest.py modified/Lib/test/regrtest.py
---- orig/Lib/test/regrtest.py	2017-01-17 15:57:50.000000000 +0800
-+++ modified/Lib/test/regrtest.py	2017-01-28 00:00:22.000000000 +0800
-@@ -554,7 +554,7 @@
-         sys.stdout.flush()
-         print()   # Force a newline (just in case)
-         print(json.dumps(result))
--        sys.exit(0)
-+        return 0
- 
-     good = []
-     bad = []
-@@ -696,7 +696,7 @@
-             from threading import Thread
-         except ImportError:
-             print("Multiprocess option requires thread support")
--            sys.exit(2)
-+            return 2
-         from queue import Queue
-         debug_output_pat = re.compile(r"\[\d+ refs, \d+ blocks\]$")
-         output = Queue()
-@@ -866,7 +866,7 @@
-     if ns.runleaks:
-         os.system("leaks %d" % os.getpid())
- 
--    sys.exit(len(bad) > 0 or interrupted)
-+    return (len(bad) > 0 or interrupted)
- 
- 
- # small set of tests to determine if we have a basically functioning interpreter
-@@ -1655,7 +1655,9 @@
-     # change the CWD, the original CWD will be used.  The original CWD is
-     # available from support.SAVEDCWD.
-     with support.temp_cwd(test_cwd, quiet=True):
--        main()
-+        result = main()
-+
-+    return result
- 
- 
- if __name__ == '__main__':
-@@ -1680,4 +1682,5 @@
-     # sanity check
-     assert __file__ == os.path.abspath(sys.argv[0])
- 
--    main_in_temp_cwd()
-+    result = main_in_temp_cwd()
-+    sys.exit(result)
 diff -Nru orig/Lib/test/support/__init__.py modified/Lib/test/support/__init__.py
 --- orig/Lib/test/support/__init__.py	2017-01-17 15:57:50.000000000 +0800
 +++ modified/Lib/test/support/__init__.py	2017-01-27 19:23:25.000000000 +0800
@@ -38934,14 +38847,6 @@ diff -Nru orig/Lib/test/test_gc.py modified/Lib/test/test_gc.py
 diff -Nru orig/Lib/test/test_gdb.py modified/Lib/test/test_gdb.py
 --- orig/Lib/test/test_gdb.py	2017-01-17 15:57:50.000000000 +0800
 +++ modified/Lib/test/test_gdb.py	2017-01-27 19:23:25.000000000 +0800
-@@ -5,7 +5,6 @@
- 
- import os
- import re
--import pprint
- import subprocess
- import sys
- import sysconfig
 @@ -21,6 +20,7 @@
  from test import support
  from test.support import run_unittest, findfile, python_is_optimized
@@ -39045,7 +38950,7 @@ diff -Nru orig/Lib/test/test_imp.py modified/Lib/test/test_imp.py
 diff -Nru orig/Lib/test/test_importlib/extension/test_finder.py modified/Lib/test/test_importlib/extension/test_finder.py
 --- orig/Lib/test/test_importlib/extension/test_finder.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_importlib/extension/test_finder.py	2017-01-27 19:23:25.000000000 +0800
-@@ -3,11 +3,14 @@
+@@ -3,10 +3,13 @@
  
  machinery = util.import_importlib('importlib.machinery')
  
@@ -39053,7 +38958,6 @@ diff -Nru orig/Lib/test/test_importlib/extension/test_finder.py modified/Lib/tes
  import unittest
  import warnings
  
- # XXX find_spec tests
  
 +@unittest.skipIf(sys.platform in ('ios', 'tvos', 'watchos'),
 +                 '%s does not support dynamic loading' % sys.platform)
@@ -39235,7 +39139,7 @@ diff -Nru orig/Lib/test/test_mmap.py modified/Lib/test/test_mmap.py
 diff -Nru orig/Lib/test/test_multiprocessing_fork.py modified/Lib/test/test_multiprocessing_fork.py
 --- orig/Lib/test/test_multiprocessing_fork.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_multiprocessing_fork.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,7 +1,13 @@
+@@ -1,2 +1,7 @@
 +import os
  import unittest
 +
@@ -39243,16 +39147,10 @@ diff -Nru orig/Lib/test/test_multiprocessing_fork.py modified/Lib/test/test_mult
 +    raise unittest.SkipTest('Test requires support for subprocesses.')
 +
  import test._test_multiprocessing
- 
- test._test_multiprocessing.install_tests_in_module_dict(globals(), 'fork')
- 
-+
- if __name__ == '__main__':
-     unittest.main()
 diff -Nru orig/Lib/test/test_multiprocessing_forkserver.py modified/Lib/test/test_multiprocessing_forkserver.py
 --- orig/Lib/test/test_multiprocessing_forkserver.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_multiprocessing_forkserver.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,7 +1,13 @@
+@@ -1,2 +1,7 @@
 +import os
  import unittest
 +
@@ -39260,16 +39158,10 @@ diff -Nru orig/Lib/test/test_multiprocessing_forkserver.py modified/Lib/test/tes
 +    raise unittest.SkipTest('Test requires support for subprocesses.')
 +
  import test._test_multiprocessing
- 
- test._test_multiprocessing.install_tests_in_module_dict(globals(), 'forkserver')
- 
-+
- if __name__ == '__main__':
-     unittest.main()
 diff -Nru orig/Lib/test/test_multiprocessing_spawn.py modified/Lib/test/test_multiprocessing_spawn.py
 --- orig/Lib/test/test_multiprocessing_spawn.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_multiprocessing_spawn.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,7 +1,13 @@
+@@ -1,2 +1,7 @@
 +import os
  import unittest
 +
@@ -39277,31 +39169,27 @@ diff -Nru orig/Lib/test/test_multiprocessing_spawn.py modified/Lib/test/test_mul
 +    raise unittest.SkipTest('Test requires support for subprocesses.')
 +
  import test._test_multiprocessing
- 
- test._test_multiprocessing.install_tests_in_module_dict(globals(), 'spawn')
- 
-+
- if __name__ == '__main__':
-     unittest.main()
 diff -Nru orig/Lib/test/test_os.py modified/Lib/test/test_os.py
 --- orig/Lib/test/test_os.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_os.py	2017-01-27 19:23:25.000000000 +0800
-@@ -679,6 +679,7 @@
+@@ -699,7 +699,8 @@
  
      # Bug 1110478
-     @unittest.skipUnless(os.path.exists('/bin/sh'), 'requires /bin/sh')
+     @unittest.skipUnless(unix_shell and os.path.exists(unix_shell),
+                          'requires a shell')
 +    @unittest.skipUnless(os.allows_subprocesses, 'Test requires support for subprocesses.')
      def test_update2(self):
          os.environ.clear()
          os.environ.update(HELLO="World")
-@@ -687,6 +688,7 @@
+@@ -708,7 +709,8 @@
              self.assertEqual(value, "World")
  
-     @unittest.skipUnless(os.path.exists('/bin/sh'), 'requires /bin/sh')
+     @unittest.skipUnless(unix_shell and os.path.exists(unix_shell),
+                          'requires a shell')
 +    @unittest.skipUnless(os.allows_subprocesses, 'Test requires support for subprocesses.')
      def test_os_popen_iter(self):
-         with os.popen(
-             "/bin/sh -c 'echo \"line1\nline2\nline3\"'") as popen:
+         with os.popen("%s -c 'echo \"line1\nline2\nline3\"'"
+                       % unix_shell) as popen:
 @@ -1435,6 +1437,8 @@
          os.execve = orig_execve
          os.defpath = orig_defpath
@@ -39364,14 +39252,6 @@ diff -Nru orig/Lib/test/test_os.py modified/Lib/test/test_os.py
 diff -Nru orig/Lib/test/test_pdb.py modified/Lib/test/test_pdb.py
 --- orig/Lib/test/test_pdb.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_pdb.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,6 +1,7 @@
- # A test suite for pdb; not very comprehensive at the moment.
- 
- import doctest
-+import os
- import pdb
- import sys
- import types
 @@ -937,6 +938,7 @@
  
  class PdbTestCase(unittest.TestCase):
@@ -39396,56 +39276,16 @@ diff -Nru orig/Lib/test/test_pdb.py modified/Lib/test/test_pdb.py
      def test_issue13210(self):
          # invoking "continue" on a non-main thread triggered an exception
          # inside signal.signal
-diff -Nru orig/Lib/test/test_pep277.py modified/Lib/test/test_pep277.py
---- orig/Lib/test/test_pep277.py	2017-01-17 15:57:51.000000000 +0800
-+++ modified/Lib/test/test_pep277.py	2017-01-27 19:23:25.000000000 +0800
-@@ -27,7 +27,7 @@
- # these normal forms.  For example, HFS Plus uses a variant of Normal Form D
- # in which U+2000 through U+2FFF, U+F900 through U+FAFF, and U+2F800 through
- # U+2FAFF are not decomposed."
--if sys.platform != 'darwin':
-+if sys.platform not in ('darwin', 'ios', 'tvos', 'watchos'):
-     filenames.extend([
-         # Specific code points: NFC(fn), NFD(fn), NFKC(fn) and NFKD(fn) all differents
-         '11_\u0385\u03d3\u03d4',
-@@ -117,11 +117,12 @@
-             os.stat(name)
-             self._apply_failure(os.listdir, name, self._listdir_failure)
- 
--    # Skip the test on darwin, because darwin does normalize the filename to
-+    # Skip the test on darwin/iOS, because darwin does normalize the filename to
-     # NFD (a variant of Unicode NFD form). Normalize the filename to NFC, NFKC,
-     # NFKD in Python is useless, because darwin will normalize it later and so
-     # open(), os.stat(), etc. don't raise any exception.
--    @unittest.skipIf(sys.platform == 'darwin', 'irrelevant test on Mac OS X')
-+    @unittest.skipIf(sys.platform in ('darwin', 'ios', 'tvos', 'watchos'),
-+                     'irrelevant test on %s' % sys.platform)
-     def test_normalize(self):
-         files = set(self.files)
-         others = set()
-@@ -136,10 +137,11 @@
-             self._apply_failure(os.remove, name)
-             self._apply_failure(os.listdir, name)
- 
--    # Skip the test on darwin, because darwin uses a normalization different
-+    # Skip the test on darwin/iOS, because darwin uses a normalization different
-     # than Python NFD normalization: filenames are different even if we use
-     # Python NFD normalization.
--    @unittest.skipIf(sys.platform == 'darwin', 'irrelevant test on Mac OS X')
-+    @unittest.skipIf(sys.platform in ('darwin', 'ios', 'tvos', 'watchos'),
-+                     'irrelevant test on %s' % sys.platform)
-     def test_listdir(self):
-         sf0 = set(self.files)
-         with warnings.catch_warnings():
 diff -Nru orig/Lib/test/test_pipes.py modified/Lib/test/test_pipes.py
 --- orig/Lib/test/test_pipes.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_pipes.py	2017-01-27 19:23:25.000000000 +0800
-@@ -1,17 +1,21 @@
+@@ -1,18 +1,22 @@
  import pipes
  import os
  import string
 +import sys
  import unittest
+ import shutil
  from test.support import TESTFN, run_unittest, unlink, reap_children
  
  if os.name != 'posix':
@@ -39557,22 +39397,6 @@ diff -Nru orig/Lib/test/test_popen.py modified/Lib/test/test_popen.py
 diff -Nru orig/Lib/test/test_posix.py modified/Lib/test/test_posix.py
 --- orig/Lib/test/test_posix.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_posix.py	2017-01-27 19:23:25.000000000 +0800
-@@ -11,7 +11,6 @@
- import os
- import platform
- import pwd
--import shutil
- import stat
- import tempfile
- import unittest
-@@ -20,6 +19,7 @@
- _DUMMY_SYMLINK = os.path.join(tempfile.gettempdir(),
-                               support.TESTFN + '-dummy-symlink')
- 
-+
- class PosixTester(unittest.TestCase):
- 
-     def setUp(self):
 @@ -40,17 +40,24 @@
      def testNoArgFunctions(self):
          # test posix functions which take no arguments and have
@@ -39776,17 +39600,6 @@ diff -Nru orig/Lib/test/test_shutil.py modified/Lib/test/test_shutil.py
      @unittest.skipUnless(hasattr(os, 'get_terminal_size'),
                           'need os.get_terminal_size()')
      def test_stty_match(self):
-diff -Nru orig/Lib/test/test_signal.py modified/Lib/test/test_signal.py
---- orig/Lib/test/test_signal.py	2017-01-17 15:57:51.000000000 +0800
-+++ modified/Lib/test/test_signal.py	2017-01-27 19:23:25.000000000 +0800
-@@ -158,6 +158,7 @@
-     @unittest.skipIf(sys.platform=='freebsd6',
-         'inter process signals not reliable (do not mix well with threading) '
-         'on freebsd6')
-+    @unittest.skipUnless(os.allows_subprocesses, 'Test requires support for subprocesses.')
-     def test_main(self):
-         # This function spawns a child process to insulate the main
-         # test-running process from all the signals. It then
 diff -Nru orig/Lib/test/test_site.py modified/Lib/test/test_site.py
 --- orig/Lib/test/test_site.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_site.py	2017-01-27 19:23:25.000000000 +0800
@@ -39960,13 +39773,11 @@ diff -Nru orig/Lib/test/test_socket.py modified/Lib/test/test_socket.py
 diff -Nru orig/Lib/test/test_socketserver.py modified/Lib/test/test_socketserver.py
 --- orig/Lib/test/test_socketserver.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_socketserver.py	2017-01-27 19:23:25.000000000 +0800
-@@ -7,7 +7,7 @@
+@@ -7,5 +7,6 @@
  import select
  import signal
  import socket
--import select
 +import sys
- import errno
  import tempfile
  import unittest
 @@ -28,9 +28,10 @@
@@ -40070,10 +39881,12 @@ diff -Nru orig/Lib/test/test_sys.py modified/Lib/test/test_sys.py
      def test_ioencoding(self):
          env = dict(os.environ)
  
-@@ -627,6 +630,7 @@
+@@ -627,8 +630,9 @@
  
      @unittest.skipUnless(test.support.FS_NONASCII,
                           'requires OS support of non-ASCII encodings')
+     @unittest.skipUnless(sys.getfilesystemencoding() == locale.getpreferredencoding(False),
+                          'requires FS encoding to match locale')
 +    @unittest.skipUnless(os.allows_subprocesses, 'Test requires support for subprocesses.')
      def test_ioencoding_nonascii(self):
          env = dict(os.environ)
@@ -40353,14 +40166,6 @@ diff -Nru orig/Lib/test/test_venv.py modified/Lib/test/test_venv.py
      def assert_pip_not_installed(self):
          envpy = os.path.join(os.path.realpath(self.env_dir),
                               self.bindir, self.exe)
-@@ -329,6 +334,7 @@
-             self.assertEqual(f.read(), b"")
- 
-     # Requesting pip fails without SSL (http://bugs.python.org/issue19744)
-+    @unittest.skipUnless(os.allows_subprocesses, 'Test requires support for subprocesses.')
-     @unittest.skipIf(ssl is None, ensurepip._MISSING_SSL_MESSAGE)
-     @unittest.skipUnless(threading, 'some dependencies of pip import threading'
-                                     ' module unconditionally')
 diff -Nru orig/Lib/test/test_webbrowser.py modified/Lib/test/test_webbrowser.py
 --- orig/Lib/test/test_webbrowser.py	2017-01-17 15:57:51.000000000 +0800
 +++ modified/Lib/test/test_webbrowser.py	2017-01-27 19:23:25.000000000 +0800
@@ -41711,7 +41516,7 @@ diff -Nru orig/Modules/_ctypes/libffi_ios/aarch64/ffi_arm64.c modified/Modules/_
 +  int f = h - AARCH64_RET_S4;
 +  void *x0;
 +
-+  asm volatile (
++  __asm__ volatile (
 +	"adr	%0, 0f\n"
 +"	add	%0, %0, %1\n"
 +"	br	%0\n"
@@ -41775,18 +41580,18 @@ diff -Nru orig/Modules/_ctypes/libffi_ios/aarch64/ffi_arm64.c modified/Modules/_
 +	*(float *)dest = *(float *)reg;
 +      break;
 +    case AARCH64_RET_S2:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "st2 { v16.s, v17.s }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17");
 +      break;
 +    case AARCH64_RET_S3:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "ldr q18, [%1, #32]\n\t"
 +	   "st3 { v16.s, v17.s, v18.s }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17", "v18");
 +      break;
 +    case AARCH64_RET_S4:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "ldp q18, q19, [%1, #32]\n\t"
 +	   "st4 { v16.s, v17.s, v18.s, v19.s }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17", "v18", "v19");
@@ -41803,18 +41608,18 @@ diff -Nru orig/Modules/_ctypes/libffi_ios/aarch64/ffi_arm64.c modified/Modules/_
 +	*(double *)dest = *(double *)reg;
 +      break;
 +    case AARCH64_RET_D2:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "st2 { v16.d, v17.d }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17");
 +      break;
 +    case AARCH64_RET_D3:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "ldr q18, [%1, #32]\n\t"
 +	   "st3 { v16.d, v17.d, v18.d }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17", "v18");
 +      break;
 +    case AARCH64_RET_D4:
-+      asm ("ldp q16, q17, [%1]\n\t"
++      __asm__ ("ldp q16, q17, [%1]\n\t"
 +	   "ldp q18, q19, [%1, #32]\n\t"
 +	   "st4 { v16.d, v17.d, v18.d, v19.d }[0], [%0]"
 +	   : : "r"(dest), "r"(reg) : "memory", "v16", "v17", "v18", "v19");
@@ -58429,20 +58234,6 @@ diff -Nru orig/Modules/pwdmodule.c modified/Modules/pwdmodule.c
  static PyMethodDef pwd_methods[] = {
      PWD_GETPWUID_METHODDEF
      PWD_GETPWNAM_METHODDEF
-diff -Nru orig/Objects/bytesobject.c modified/Objects/bytesobject.c
---- orig/Objects/bytesobject.c	2017-01-17 15:57:53.000000000 +0800
-+++ modified/Objects/bytesobject.c	2017-01-27 19:23:25.000000000 +0800
-@@ -201,8 +201,8 @@
-                 int c = va_arg(count, int);
-                 if (c < 0 || c > 255) {
-                     PyErr_SetString(PyExc_OverflowError,
--                                    "PyBytes_FromFormatV(): %c format "
--                                    "expects an integer in range [0; 255]");
-+                                    sprintf("PyBytes_FromFormatV(): %%c format "
-+                                    "expects an integer in range [0; 255], got %d", c));
-                     return NULL;
-                 }
-                 n++;
 diff -Nru orig/Python/marshal.c modified/Python/marshal.c
 --- orig/Python/marshal.c	2017-01-17 15:57:54.000000000 +0800
 +++ modified/Python/marshal.c	2017-01-27 19:23:25.000000000 +0800
