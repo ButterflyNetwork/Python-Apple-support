@@ -31,8 +31,8 @@ BUILD_NUMBER=1
 PYTHON_VERSION=3.6.0
 PYTHON_VER=$(basename $(PYTHON_VERSION))
 
-OPENSSL_VERSION_NUMBER=1.0.2
-OPENSSL_REVISION=k
+OPENSSL_VERSION_NUMBER=1.1.0
+OPENSSL_REVISION=e
 OPENSSL_VERSION=$(OPENSSL_VERSION_NUMBER)$(OPENSSL_REVISION)
 
 BZIP2_VERSION=1.0.6
@@ -48,20 +48,15 @@ TARGETS-macOS=macosx.x86_64
 # iOS targets
 TARGETS-iOS=iphonesimulator.x86_64 iphonesimulator.i386 iphoneos.armv7 iphoneos.armv7s iphoneos.arm64
 CFLAGS-iOS=-miphoneos-version-min=7.0
-CFLAGS-iphoneos.armv7=-fembed-bitcode
-CFLAGS-iphoneos.armv7s=-fembed-bitcode
-CFLAGS-iphoneos.arm64=-fembed-bitcode
 
 # tvOS targets
 TARGETS-tvOS=appletvsimulator.x86_64 appletvos.arm64
 CFLAGS-tvOS=-mtvos-version-min=9.0
-CFLAGS-appletvos.arm64=-fembed-bitcode
 PYTHON_CONFIGURE-tvOS=ac_cv_func_sigaltstack=no
 
 # watchOS targets
 TARGETS-watchOS=watchsimulator.i386 watchos.armv7k
 CFLAGS-watchOS=-mwatchos-version-min=2.0
-CFLAGS-watchos.armv7k=-fembed-bitcode
 PYTHON_CONFIGURE-watchOS=ac_cv_func_sigaltstack=no
 
 # override machine types for arm64
