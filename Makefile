@@ -267,6 +267,7 @@ else
 		ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no \
 		$$(PYTHON_CONFIGURE-$2)
 	sed -ie 's|\#define HAVE_GETENTROPY 1|/* \#undef HAVE_GETENTROPY */|' $$(PYTHON_DIR-$1)/pyconfig.h
+	sed -ie 's|\#define HAVE_CLOCK_GETTIME 1|/* \#undef HAVE_CLOCK_GETTIME */|' $$(PYTHON_DIR-$1)/pyconfig.h
 	sed -ie 's|\#define HAVE_CLOCK_SETTIME 1|/* \#undef HAVE_CLOCK_SETTIME */|' $$(PYTHON_DIR-$1)/pyconfig.h
 endif
 
